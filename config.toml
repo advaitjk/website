@@ -1,9 +1,9 @@
 # default configuration
-baseURL = "https://alexamf.netlify.app/"
+baseURL = "https://https://advait-jayant.netlify.app/"
 languageCode = "en-us"
 summaryLength = "10"
 theme = "kross-hugo"
-title = "Alex's Site"
+title = "Advait's Site"
 
 # css plugins
 [[params.plugins.css]]
