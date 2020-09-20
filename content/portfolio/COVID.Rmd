@@ -1,0 +1,100 @@
+---
+title: "COVID-19 Statistics"
+author: "Alessandro Angeletti"
+date: "2020-09-18"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: hide
+categories:
+- Healthcare
+draft: false
+image: images/portfolio/COVID.jpg
+---
+
+```{r load-libraries, include=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(httr)
+library(readxl)
+library(vroom)
+library(ggrepel)
+```
+
+# CDC COVID-19 Public Use Data
+
+Please note that all data had been obtained from the [CDC Covid-19 Case Surveillance Data File](https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf).
+There are well over 3 million entries of individual, de-identified patient data.
+
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE}
+
+url <- "https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD"
+
+covid_data <- vroom(url)
+covid_co_morbidities <- covid_data %>%
+  select(current_status, sex, age_group, icu_yn, medcond_yn, death_yn) %>%
+  filter(sex == "Female" | sex == "Male") %>%
+  filter(age_group != "Unknown") %>%
+  filter(medcond_yn == "Yes" | medcond_yn == "No") %>%
+  filter(death_yn %in% c("Yes", "No")) %>% 
+  mutate(co_morbidities = case_when(
+    medcond_yn == "Yes" ~ "With comorbidities",
+    medcond_yn == "No" ~ "Without comorbidities",
+    TRUE ~ as.character(NA_real_)))
+
+covid_comorb <- covid_co_morbidities %>% 
+  group_by(age_group, sex, co_morbidities, death_yn) %>% 
+  summarise(count = n()) %>% 
+  mutate(proportion_co = 100 * count/(sum(count))) %>% 
+  filter(death_yn == "Yes")
+
+comorb_plot <- ggplot(data = covid_comorb, mapping = aes( x = proportion_co, y = age_group, label = sprintf("%0.2f", round(proportion_co, digits = 1)))) +
+  geom_col(fill = "#6699cc") +
+  facet_grid(co_morbidities ~ sex) +
+  theme_bw() +
+  geom_text_repel(size = 3 , hjust = -0.05 , aes(label = round(proportion_co, digits = 1))) +
+  labs(subtitle = "Covid death % by age group, sex and presence of co-morbidities", 
+       x = "", y = "", caption = "Source: CDC") +
+  xlim(0,72)
+
+comorb_plot
+
+covid_icu <- covid_data %>%
+  select(current_status, sex, age_group, icu_yn, medcond_yn, death_yn) %>%
+  filter(sex == "Female" | sex == "Male") %>%
+  filter(age_group != "Unknown") %>%
+  filter(icu_yn == "Yes" | icu_yn == "No") %>%
+  filter(death_yn %in% c("Yes", "No")) %>% 
+  mutate(icu = case_when(
+    icu_yn == "Yes" ~ "Admitted to ICU",
+    icu_yn == "No" ~ "No ICU",
+    TRUE ~ as.character(NA_real_)))
+
+covid_icu_final <- covid_icu %>% 
+  group_by(age_group, sex, icu, death_yn) %>% 
+  summarise(count = n()) %>% 
+  mutate(proportion_icu = 100 * count/(sum(count))) %>% 
+  filter(death_yn == "Yes")
+
+icu_plot <- ggplot(data = covid_icu_final, mapping = aes( x = proportion_icu, y = age_group)) +
+  geom_col(fill = "#ff7f50") +
+  facet_grid(icu ~ sex) +
+  theme_bw() +
+  geom_text(size = 3 , hjust = -0.05 , aes(label = round(proportion_icu, digits = 1))) +
+  labs(subtitle = "Covid death % by age group, sex and whether the patient was admitted to ICU", 
+       x = "", y = "", caption = "Source: CDC") +
+  xlim(0,85)
+
+icu_plot
+
+```

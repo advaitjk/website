@@ -1,0 +1,55 @@
+---
+title: "UBER Analytics"
+author: "Alessandro Angeletti"
+date: "2020-09-18"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: hide
+categories:
+- Transport
+draft: false
+image: images/portfolio/UBER.jpg
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/datatables-binding/datatables.js"></script>
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+
+
+<p>The first step is to important all of the data.</p>
+<p>Then because we have very messy and unformatted data - particularly the dates and times - we need to clean this up such that we can process the data correctly. Therefore, we use <code>lubridate</code> to convert out data into an understandable format.</p>
+<pre><code>## # A tibble: 4,534,327 x 9
+##    Date_Time        Date       Year  Month Day   DayOfWeek   Lat   Lon Base  
+##    &lt;chr&gt;            &lt;fct&gt;      &lt;fct&gt; &lt;fct&gt; &lt;fct&gt; &lt;ord&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
+##  1 04/01/2014 00:11 2014-04-01 2014  April 01    Tue        40.8 -74.0 B02512
+##  2 04/01/2014 00:17 2014-04-01 2014  April 01    Tue        40.7 -74.0 B02512
+##  3 04/01/2014 00:21 2014-04-01 2014  April 01    Tue        40.7 -74.0 B02512
+##  4 04/01/2014 00:28 2014-04-01 2014  April 01    Tue        40.8 -74.0 B02512
+##  5 04/01/2014 00:33 2014-04-01 2014  April 01    Tue        40.8 -74.0 B02512
+##  6 04/01/2014 00:33 2014-04-01 2014  April 01    Tue        40.7 -74.0 B02512
+##  7 04/01/2014 00:39 2014-04-01 2014  April 01    Tue        40.7 -74.0 B02512
+##  8 04/01/2014 00:45 2014-04-01 2014  April 01    Tue        40.8 -74.0 B02512
+##  9 04/01/2014 00:55 2014-04-01 2014  April 01    Tue        40.8 -74.0 B02512
+## 10 04/01/2014 01:01 2014-04-01 2014  April 01    Tue        40.8 -74.0 B02512
+## # ... with 4,534,317 more rows</code></pre>
+<p>Now we want to see how the number of trips made by Uber varies throughout the week. Therefore, we find make a wonderful data displaying this.</p>
+<p><div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7"],["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],[490180,541472,663789,696488,755145,741139,646114]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>DayOfWeek<\/th>\n      <th>Total<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42"],["April","April","April","April","April","April","April","August","August","August","August","August","August","August","July","July","July","July","July","July","July","June","June","June","June","June","June","June","May","May","May","May","May","May","May","September","September","September","September","September","September","September"],["Sun","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon","Tue","Wed","Thu","Fri","Sat"],[51251,60861,91185,108631,85067,90303,77218,110246,91633,107124,115256,124117,148674,132225,76327,93189,137454,147717,148439,102735,90260,79656,94655,88134,99654,115325,105056,81364,56168,63846,76662,89857,128921,133991,102990,116532,137288,163230,135373,153276,160380,162057]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Month<\/th>\n      <th>DayOfWeek<\/th>\n      <th>Total<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script></p>
+<p>Unfortunately, number arent as easy to digest, so lets plot this on a graph.</p>
+<p><img src="/portfolio/UBER_files/figure-html/unnamed-chunk-5-1.png" width="672" /><img src="/portfolio/UBER_files/figure-html/unnamed-chunk-5-2.png" width="672" />
+Alright, but its still kind of hard to understand when its busiest for Uber, so lets try this out…</p>
+<pre><code>## `summarise()` regrouping output by &#39;DayOfWeek&#39; (override with `.groups` argument)</code></pre>
+<p><div id="htmlwidget-3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42"],["Sun","Sun","Sun","Sun","Sun","Sun","Mon","Mon","Mon","Mon","Mon","Mon","Tue","Tue","Tue","Tue","Tue","Tue","Wed","Wed","Wed","Wed","Wed","Wed","Thu","Thu","Thu","Thu","Thu","Thu","Fri","Fri","Fri","Fri","Fri","Fri","Sat","Sat","Sat","Sat","Sat","Sat"],["April","August","July","June","May","September","April","August","July","June","May","September","April","August","July","June","May","September","April","August","July","June","May","September","April","August","July","June","May","September","April","August","July","June","May","September","April","August","July","June","May","September"],[51251,110246,76327,79656,56168,116532,60861,91633,93189,94655,63846,137288,91185,107124,137454,88134,76662,163230,108631,115256,147717,99654,89857,135373,85067,124117,148439,115325,128921,153276,90303,148674,102735,105056,133991,160380,77218,132225,90260,81364,102990,162057]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>DayOfWeek<\/th>\n      <th>Month<\/th>\n      <th>Total<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><img src="/portfolio/UBER_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>

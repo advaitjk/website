@@ -1,0 +1,71 @@
+---
+title: "IMBD Movies"
+author: "Alessandro Angeletti"
+date: "2020-09-18"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: hide
+categories:
+- Movie Analytics
+draft: false
+image: images/portfolio/movies.jpg
+---
+
+
+
+<div id="imdb-ratings-differences-between-directors" class="section level1">
+<h1>IMDB ratings: Differences between directors</h1>
+<p>Here we wish to doa small experiment, we want to see whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not by seeing if the confidence intervals overlap.</p>
+<div id="confidence-intervals" class="section level2">
+<h2>Confidence Intervals</h2>
+<pre><code>## # A tibble: 2 x 9
+##   director         mean    sd count    se t_critical margin_of_error lower upper
+##   &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Steven Spielbe~  7.57 0.695    23 0.145       2.07           0.301  7.27  7.87
+## 2 Tim Burton       6.93 0.749    16 0.187       2.13           0.399  6.53  7.33</code></pre>
+<p><img src="/portfolio/IMBD_files/figure-html/directors-1.png" width="100%" /></p>
+</div>
+<div id="hypothesis-testing" class="section level2">
+<h2>Hypothesis Testing</h2>
+<p>After inspecting the confidence intervals, we conducted hypothesis testing using both the <code>t.test</code> command and the <code>infer</code> package to simulate from a null distribution, where we assumed zero difference between the two.</p>
+<p>First we noted down our null and alternative hypotheses:</p>
+<blockquote>
+<p><code>H0</code>: Spielberg’s and Burton’s means are statistically similar</p>
+<p><code>Ha</code>: Spielberg’s and Burton’s means are statistically dissimilar</p>
+</blockquote>
+<blockquote>
+<p>We can also write this as:</p>
+<p><code>H0</code>: mu_s - mu_b = 0</p>
+<p><code>Ha</code>: mu_s - mu_b != 0</p>
+</blockquote>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  rating by director
+## t = 2.7521, df = 37, p-value = 0.009119
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.169504 1.115822
+## sample estimates:
+## mean in group Steven Spielberg       mean in group Tim Burton 
+##                       7.573913                       6.931250</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##    stat
+##   &lt;dbl&gt;
+## 1 0.643</code></pre>
+<p><img src="/portfolio/IMBD_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre><code>## # A tibble: 1 x 1
+##   p_value
+##     &lt;dbl&gt;
+## 1   0.007</code></pre>
+<blockquote>
+<p>Since our p-values are smaller than our alpha of 5%, we reject the null hypothesis in favor of the alternative hypothesis.
+Therefore, Spielberg’s mean IMBD rating is statistically different from Burton’s IMBD rating</p>
+</blockquote>
+</div>
+</div>
