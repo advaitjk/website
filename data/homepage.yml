@@ -1,0 +1,153 @@
+# banner
+banner:
+  title : "Hi! I’m <br> Alessandro aka Alex <br> A Master's Student"
+
+# about
+about:
+  enable : true
+  content : "Hello stranger! <br> Thanks for checking out my website, if you want a brief run-down of my life, feel free to scroll down, however, click on the button bellow to read more about me."
+  button:
+    enable : true
+    label : "Click to Know More"
+    URL : "about"
+
+# skill
+skill:
+  enable : true
+  title : "Skills"
+  item:
+    - title : "Team Player"
+      progress : "90%"
+      color : "#fdb157"
+      
+    - title : "Communication"
+      progress : "60%"
+      color : "#9473e6"
+      
+    - title : "Motivation"
+      progress : "80%"
+      color : "#bdecf6"
+      
+    - title : "R Skills"
+      progress : "20%"
+      color : "#ffbcaa"
+
+# experience
+experience:
+  enable : true
+  title : "Work Experience"
+  item: 
+    - logo : "images/experience/icon-1.png"
+      title : "Treasury Department Intern"
+      company : "Banco de Negocios EBN, Madrid"
+      duration : "June 2019 - July 2020"
+      
+    - logo : "images/experience/icon-2.png"
+      title : "Pro Bono Strategy Consultant"
+      company : "First Step Consulting, London"
+      duration : "February 2019 - May 2019"
+      
+    - logo : "images/experience/icon-1.png"
+      title : "Digital Enablement Summer Intern"
+      company : "EY, Luxembourg"
+      duration : "June 2018 - July 2019"
+
+# education
+education:
+  enable : true
+  title : "Education"
+  item:
+    - title : "Masters in Analytics and Management"
+      year : "2021"
+      academy : "London Business School"
+      
+    - title : "BSc in Finance (Hons)"
+      year : "2020"
+      academy : "Cass Buisness School"
+
+# service
+service:
+  enable : true
+  title : "Sectors of Interest"
+  item:
+    - title : "Consulting"
+      icon : "ti-direction-alt"
+      content : "Seeking firms based in: Spain, UAE or Italy"
+      highlighted : false
+
+    - title : "Telecommunications"
+      icon : "ti-signal"
+      content : "Seeking firms based in: United Kingdom or Europe"
+      highlighted : true
+
+    - title : "Energy"
+      icon : "ti-bolt"
+      content : "Seeking firms based in: United Kingdom or Europe"
+      highlighted : false
+
+# portfolio
+portfolio:
+  enable : true
+  title : "Portfolio"
+  item_show : 5
+  # portfolio item comes from 'data/portfolio.yml' item.
+
+# testimonial
+testimonial:
+  enable : false
+  title : "Testimonials"
+  item:
+    - name : "Jesica Gomez"
+      image : "images/testimonial/client-1.png"
+      designation : "CEO, Funder"
+      content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <strong>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</strong> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+      
+    - name : "Shirley Scot"
+      image : "images/testimonial/client-1.png"
+      designation : "CEO, Funder"
+      content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <strong>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</strong> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+      
+    - name : "Jessica Julie"
+      image : "images/testimonial/client-1.png"
+      designation : "CEO, Funder"
+      content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <strong>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</strong> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+
+# client logo slider
+clients_logo_slider:
+  enable : false
+  item:
+    - logo : "images/clients-logo/client-logo-1.png"
+      URL : "http://examplesite.com"
+      
+    - logo : "images/clients-logo/client-logo-2.png"
+      URL : "#"
+      
+    - logo : "images/clients-logo/client-logo-3.png"
+      URL : "http://examplesite.com"
+      
+    - logo : "images/clients-logo/client-logo-4.png"
+      URL : "#"
+      
+    - logo : "images/clients-logo/client-logo-5.png"
+      URL : "http://examplesite.com"
+      
+    - logo : "images/clients-logo/client-logo-1.png"
+      URL : "#"
+      
+    - logo : "images/clients-logo/client-logo-2.png"
+      URL : "http://examplesite.com"
+      
+    - logo : "images/clients-logo/client-logo-3.png"
+      URL : "#"
+      
+    - logo : "images/clients-logo/client-logo-4.png"
+      URL : "http://examplesite.com"
+      
+    - logo : "images/clients-logo/client-logo-5.png"
+      URL : "#"
+
+# blog
+blog:
+  enable : false
+  title : "Blogs"
+  # blog post comes from "content/blog" folder

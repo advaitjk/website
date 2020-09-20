@@ -1,0 +1,37 @@
+---
+title: "COVID-19 Statistics"
+author: "Alessandro Angeletti"
+date: "2020-09-18"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: hide
+categories:
+- Healthcare
+draft: false
+image: images/portfolio/COVID.jpg
+---
+
+
+
+<div id="cdc-covid-19-public-use-data" class="section level1">
+<h1>CDC COVID-19 Public Use Data</h1>
+<p>Please note that all data had been obtained from the <a href="https://data.cdc.gov/Case-Surveillance/COVID-19-Case-Surveillance-Public-Use-Data/vbim-akqf">CDC Covid-19 Case Surveillance Data File</a>.
+There are well over 3 million entries of individual, de-identified patient data.</p>
+<pre><code>## Rows: 3,662,325
+## Columns: 11
+## Delimiter: &quot;,&quot;
+## chr  [8]: current_status, sex, age_group, Race and ethnicity (combined), hosp_yn, icu_yn...
+## date [3]: cdc_report_dt, pos_spec_dt, onset_dt
+## 
+## Use `spec()` to retrieve the guessed column specification
+## Pass a specification to the `col_types` argument to quiet this message</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;age_group&#39;, &#39;sex&#39;, &#39;co_morbidities&#39; (override with `.groups` argument)</code></pre>
+<p><img src="/portfolio/COVID_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre><code>## `summarise()` regrouping output by &#39;age_group&#39;, &#39;sex&#39;, &#39;icu&#39; (override with `.groups` argument)</code></pre>
+<p><img src="/portfolio/COVID_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+</div>

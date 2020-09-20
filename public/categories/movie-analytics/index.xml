@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Movie Analytics on Alex&#39;s Site</title>
+    <link>/categories/movie-analytics/</link>
+    <description>Recent content in Movie Analytics on Alex&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 18 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/movie-analytics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>IMBD Movies</title>
+      <link>/portfolio/imbd/</link>
+      <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/portfolio/imbd/</guid>
+      <description>IMDB ratings: Differences between directorsHere we wish to doa small experiment, we want to see whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not by seeing if the confidence intervals overlap.</description>
+    </item>
+    
+  </channel>
+</rss>

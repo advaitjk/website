@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Economic Analytics on Alex&#39;s Site</title>
+    <link>/categories/economic-analytics/</link>
+    <description>Recent content in Economic Analytics on Alex&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 18 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/economic-analytics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UN GDP Data Analysis</title>
+      <link>/portfolio/gdp/</link>
+      <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/portfolio/gdp/</guid>
+      <description>## -- Attaching packages ---------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --## v ggplot2 3.</description>
+    </item>
+    
+  </channel>
+</rss>

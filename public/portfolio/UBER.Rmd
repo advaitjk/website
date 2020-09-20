@@ -1,0 +1,145 @@
+---
+title: "UBER Analytics"
+author: "Alessandro Angeletti"
+date: "2020-09-18"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: hide
+categories:
+- Transport
+draft: false
+image: images/portfolio/UBER.jpg
+---
+
+```{r, echo=FALSE, message = FALSE}
+library(ggplot2)
+library(ggthemes)
+library(lubridate)
+library(dplyr)
+library(tidyr)
+library(DT)
+library(scales)
+library(tidyverse)
+```
+
+The first step is to important all of the data.
+
+```{r, cache = TRUE, message = FALSE, echo = FALSE}
+apr_data <- read_csv(here::here('csv', 'uber-raw-data-apr14.csv'))
+may_data <- read_csv(here::here('csv', "uber-raw-data-may14.csv"))
+jun_data <- read_csv(here::here('csv', "uber-raw-data-jun14.csv"))
+jul_data <- read_csv(here::here('csv', "uber-raw-data-jul14.csv"))
+aug_data <- read_csv(here::here('csv', "uber-raw-data-aug14.csv"))
+sep_data <- read_csv(here::here('csv', "uber-raw-data-sep14.csv"))
+```
+
+
+Then because we have very messy and unformatted data - particularly the dates and times - we need to clean this up such that we can process the data correctly. Therefore, we use `lubridate` to convert out data into an understandable format.
+
+```{r, cache = TRUE, echo=FALSE, warning = FALSE, message = FALSE}
+data_2014 <- rbind(apr_data,may_data, jun_data, jul_data, aug_data, sep_data)
+
+clean_data_2014 <- data_2014 %>% 
+  mutate(
+    Year = factor(format(as.Date(Date_Time, format = "%m/%d/%Y %H:%M"), "%Y")),
+    Month = factor(format(as.Date(Date_Time, format = "%m/%d/%Y %H:%M"), "%m")),
+    Day = factor(format(as.Date(Date_Time, format = "%m/%d/%Y %H:%M"), "%d")),
+    Date = factor(paste(Year, Month, Day, sep = "-")),
+    DayOfWeek = factor(wday(Date, label = TRUE)),
+    Month = factor(case_when(
+      Month == "04" ~ "April",
+      Month == "05" ~ "May",
+      Month == "06" ~ "June",
+      Month == "07" ~ "July",
+      Month == "08" ~ "August",
+      Month == "09" ~ "September"
+    ))
+  ) %>% 
+  select(c(Date_Time, Date, Year, Month, Day, DayOfWeek, Lat, Lon, Base))
+
+clean_data_2014
+```
+
+Now we want to see how the number of trips made by Uber varies throughout the week. Therefore, we find make a wonderful data displaying this.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+Day_Data <- clean_data_2014 %>% 
+  group_by(DayOfWeek) %>%
+  summarize(Total = n())
+
+datatable(Day_Data)
+
+Month_Day <- clean_data_2014 %>%
+  group_by(Month, DayOfWeek) %>%
+  summarize(Total = n())
+
+datatable(Month_Day)
+```
+
+Unfortunately, number arent as easy to digest, so lets plot this on a graph.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+ggplot(Day_Data, aes(DayOfWeek, Total)) + 
+        geom_bar(stat = "identity", fill = "#276EF1", color = "#7356BF") +
+            labs(
+              title = "Thursday and Friday Are Uber's Busiest Days!",
+              subtitle = "Uber Trips by Day of Week"
+            ) +
+            theme(legend.position = "none") +
+            scale_y_continuous(labels = comma)
+
+ggplot(Month_Day, aes(DayOfWeek, Total, fill = Month)) + 
+  geom_bar(stat = "identity") +
+  facet_wrap(~ Month) +
+  labs(
+    title = "Summer is the busiest time of the year!",
+    subttle = "Uber trips by month and day of week"
+  ) +
+  scale_y_continuous(labels = comma)
+```
+Alright, but its still kind of hard to understand when its busiest for Uber, so lets try this out...
+
+```{r, echo = FALSE}
+Day_and_Month <- clean_data_2014 %>%
+  group_by(DayOfWeek, Month) %>%
+  summarize(Total = n())
+
+datatable(Day_and_Month)
+
+ggplot(Day_and_Month, aes(DayOfWeek, Month, fill = Total)) +
+  geom_tile(aes(fill = Total, width = .95, height = .95)) +
+  geom_text(aes(label = Total), size = 4, color = "white") +
+  scale_fill_gradient(low = "#7356BF", high = "#FFC043") +
+  
+  ggtitle("Heat Map by Month and Day")
+```
+
+```{r, cache=TRUE, echo  = FALSE}
+# library(leaflet)
+# library(leaflet.extras)
+# 
+# set.seed(1234)
+# plot_data <- data_2014 %>% 
+#   sample_frac(0.05, replace = FALSE)
+# 
+# leaflet(data = plot_data) %>% 
+#   
+#   addProviderTiles("OpenStreetMap.Mapnik") %>% 
+#   
+#   addCircleMarkers(lng = ~Lon, 
+#                    lat = ~Lat,
+#                    clusterOptions = markerClusterOptions()
+#                    ) %>% 
+#   addHeatmap(lng = ~Lon, 
+#              lat = ~Lat,
+#              radius = 15,
+#              blur = 40,
+#              cellSize = 30
+#              )
+```
+

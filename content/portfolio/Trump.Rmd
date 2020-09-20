@@ -1,0 +1,109 @@
+---
+title: "Trump"
+author: "Alessandro Angeletti"
+date: "2020-09-18"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: hide
+categories:
+- Politics
+draft: false
+image: images/portfolio/elections.jpg
+---
+
+```{r load-libraries, include=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(lubridate)
+library(here)
+library(skimr)
+library(janitor)
+library(httr)
+library(readxl)
+library(vroom)
+#install.packages(infer)
+```
+
+# Trump's Approval Margins
+
+We start by importing the data files and cleaning them up ahead of our analysis.    
+
+```{r, cache=TRUE, echo=FALSE}
+# Import approval polls data
+approval_polllist <- read_csv(here::here('csv', 'approval_polllist.csv'))
+
+# Quickly view data set.
+# glimpse(approval_polllist)
+
+# Data set cleaned.
+approval_polllist_clean <- approval_polllist %>%
+    select(c(enddate, samplesize, adjusted_approve, adjusted_disapprove)) %>% 
+    mutate(approval_difference = adjusted_approve - adjusted_disapprove)
+approval_polllist_clean
+
+# Use `lubridate` to fix dates, as they are given as characters.
+```
+
+## Create a plot
+
+> The Average net approval rating of Trump along with the 95% confidence intervals are calculated below.
+
+```{r, echo = FALSE}
+# The data set of approval ratings are cleaned along with finding the confidence intervals.
+Trump_Approval <- approval_polllist_clean %>%
+  mutate(enddate = mdy(enddate),
+         year = year(enddate),
+         week = week(enddate)
+         ) %>%
+  group_by(year, week) %>% 
+        summarise(Weekly_difference = sum(approval_difference),
+                  avg_difference = mean(approval_difference),
+                  se_Trump = sd(approval_difference)/sqrt(n()),
+                  t_crit = qt(0.975, n() - 1),
+                  lower_CIs = (avg_difference - t_crit * se_Trump),
+                  upper_CIs = (avg_difference + t_crit * se_Trump)
+                  )
+Trump_Approval
+```
+
+> Now that we had all the data we need, lets complete our plots!
+
+```{r, echo=FALSE}
+# The approval plot is created along with the confidence intervals.
+Approval_Plot <- Trump_Approval %>%
+  ggplot(aes(x = week, y = avg_difference)) +
+  geom_ribbon(mapping = aes(ymin = lower_CIs, ymax = upper_CIs), alpha = 0.3)+
+  geom_line() +
+  geom_point() +
+  facet_wrap(~ year) +
+  geom_hline(mapping = aes(yintercept = 0), color = "orange") +
+  theme(legend.position = "none",
+        panel.background = element_rect("white", "black"),
+        panel.grid.major = element_line("light grey"),
+        panel.grid.minor = element_line("light grey")
+        ) +
+  labs (
+    title = "Estimate Net Approval (approve-disaprove) for Donald Trump",
+    subtitle = "Weekly average of all polls",
+    y = "Average Net Approval (%)",
+    x = "Week of the year"
+  ) +
+  expand_limits(x = c(0, 52), y = 7.5) +
+  NULL
+
+Approval_Plot
+```
+
+```{r trump_margins, echo=FALSE, out.width="100%"}
+picture <- knitr::include_graphics(here::here("images", "trump_approval_margin.png"), error = FALSE)
+```
+
+## Compare Confidence Intervals
+
+> As seen in the approval plot, mid-April shows that the confidence intervals are closer compared to larger confidence intervals in mid August. As standard error is proportional to the variance of trump's approval ratings, national events that happened mid August, such as the BLM protests and the handling of the Covid crisis, has made the public's view of Trump far more polarized. Because of this, the standard errors increase widening the confidence intervals.

@@ -1,0 +1,16 @@
+base
+ggplot2
+ggthemes
+lubridate
+dplyr
+tidyr
+DT
+scales
+tidyverse
+tibble
+readr
+purrr
+stringr
+forcats
+leaflet
+leaflet.extras

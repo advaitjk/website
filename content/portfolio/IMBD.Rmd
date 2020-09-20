@@ -1,0 +1,147 @@
+---
+title: "IMBD Movies"
+author: "Alessandro Angeletti"
+date: "2020-09-18"
+output:
+  html_document:
+    theme: flatly
+    highlight: zenburn
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: hide
+categories:
+- Movie Analytics
+draft: false
+image: images/portfolio/movies.jpg
+---
+
+```{r load-libraries, include = FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+```
+
+# IMDB ratings: Differences between directors
+
+Here we wish to doa  small experiment, we want to see whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not by seeing if the confidence intervals overlap.
+
+## Confidence Intervals
+
+
+```{r directors, out.width="100%", echo = FALSE, message=FALSE}
+movies <- read_csv(here::here("csv", "movies.csv"))
+
+comparison_data <- movies %>% 
+  filter(director %in% c("Tim Burton", "Steven Spielberg")) %>% 
+  select(c(director, title, rating)) %>%
+  group_by(director) %>% 
+  summarise(mean = mean(rating),
+            sd = sd(rating),
+            count = n(),
+            se = sd/sqrt(count),
+            t_critical = qt(0.975, count-1), 
+            margin_of_error = t_critical * se,
+            lower = mean - t_critical * se,
+            upper = mean + t_critical * se
+            )
+
+comparison_data
+
+data_plot <- comparison_data %>%
+  ggplot(aes(color = c("#00bfc4", "#f8766d"))) +
+  geom_errorbar(aes(
+                    y = reorder(director, mean),
+                    xmin = lower, 
+                    xmax = upper),
+                size = 2,
+                width = .05
+                ) +
+  geom_point(aes(x = mean, y = director), size = 4) +
+  geom_rect(xmin = 7.27,
+            xmax = 7.33,
+            ymin = 0,
+            ymax = 100,
+            alpha = .7,
+            fill = "#c8c8c8",
+            color = "#c8c8c8"
+            ) +
+  theme_bw() +
+  theme(
+    legend.position = "",
+  ) +
+  labs(
+    title = "Do Spielberg and Burton have the same mean IMBD ratings?",
+    subtitle = "95% confidence interval overlap",
+    x = "Mean IMBD Rating",
+    y = ""
+  ) +
+  annotate("text", x = 6.93, y = 1.1, size = 8, label = "6.93") +
+  annotate("text", x = 6.53, y = 1.1, size = 5, label = "6.53") +
+  annotate("text", x = 7.33, y = 1.1, size = 5, label = "7.33") +
+  annotate("text", x = 7.27, y = 2.1, size = 5, label = "7.27") +
+  annotate("text", x = 7.57, y = 2.1, size = 8, label = "7.57") +
+  annotate("text", x = 7.87, y = 2.1, size = 5, label = "7.87")
+
+data_plot
+
+```
+
+
+## Hypothesis Testing
+
+After inspecting the confidence intervals, we conducted hypothesis testing using both the `t.test` command and the `infer` package to simulate from a null distribution, where we assumed zero difference between the two.
+
+First we noted down our null and alternative hypotheses:
+
+> `H0`: Spielberg's and Burton's means are statistically similar
+>
+> `Ha`: Spielberg's and Burton's means are statistically dissimilar
+
+> We can also write this as:
+> 
+> `H0`: mu_s - mu_b = 0
+> 
+> `Ha`: mu_s - mu_b != 0 
+
+```{r, echo = FALSE}
+tests <- movies %>% 
+  filter(director %in% c("Tim Burton", "Steven Spielberg")) %>% 
+  group_by(director)
+
+ttest <- t.test(rating ~ director, data = tests, var.equal = TRUE)
+ttest
+
+null_disttrib <- tests %>% 
+  specify(rating ~ director) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  calculate(stat = "diff in means",
+            order = c("Steven Spielberg", "Tim Burton")) 
+
+#null_disttrib
+
+mean_diff <- tests %>% 
+  specify(rating ~ director) %>% 
+  calculate(stat = "diff in means",
+            order = c("Steven Spielberg", "Tim Burton"))
+mean_diff
+
+visualise(null_disttrib, bins = 10) +
+  shade_p_value(obs_stat = mean_diff, direction = "right")
+
+null_disttrib %>% 
+  get_p_value(obs_stat = mean_diff, direction = "right")
+```
+
+> Since our p-values are smaller than our alpha of 5%, we reject the null hypothesis in favor of the alternative hypothesis.
+> Therefore, Spielberg's mean IMBD rating is statistically different from Burton's IMBD rating

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>People Analytics on Alex&#39;s Site</title>
+    <link>/categories/people-analytics/</link>
+    <description>Recent content in People Analytics on Alex&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 18 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/people-analytics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Youth Risk Behavior Surveillance</title>
+      <link>/portfolio/yrbs/</link>
+      <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/portfolio/yrbs/</guid>
+      <description>Youth Risk Behavior SurveillanceEvery two years, the Centers for Disease Control and Prevention conduct the YRBSS survey, where it takes data from high schoolers (9th through 12th grade), to analyze health patterns.</description>
+    </item>
+    
+  </channel>
+</rss>

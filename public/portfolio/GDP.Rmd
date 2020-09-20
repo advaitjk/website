@@ -1,0 +1,259 @@
+---
+title: "UN GDP Data Analysis"
+author: "Alessandro Angeletti"
+date: "2020-09-18"
+output:
+  html_document:
+    theme: cosmo
+    highlight: breezedark
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    code_folding: hide
+categories:
+- Economic Analytics
+draft: false
+image: images/portfolio/GDP.jpg
+---
+
+```{r load-libraries, echo = FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+```
+
+
+```{r read_GDP_data, echo=FALSE}
+library(tidyr)
+library(reshape2)
+
+UN_GDP_data  <-  read_excel(here::here("data", "Download-GDPconstant-USD-countries.xls"), # Excel filename
+                sheet="Download-GDPconstant-USD-countr", # Sheet name
+                skip=2) # Number of rows to skip
+
+UN_data_clean <-  UN_GDP_data %>%
+  mutate(IndicatorName = case_when(
+    IndicatorName %in% "Agriculture, hunting, forestry, fishing (ISIC A-B)"~ "Agriculture",
+    IndicatorName %in% "Changes in inventories"~ "Inventories",
+    IndicatorName %in% "Construction (ISIC F)" ~ "Construction",
+    IndicatorName %in% "Exports of goods and services" ~ "Exports",
+    IndicatorName %in% "Final consumption expenditure" ~ "Consumption",
+    IndicatorName %in% "General government final consumption expenditure" ~ "Government",
+    IndicatorName %in% "Gross capital formation" ~ "Capital",
+    IndicatorName %in% "Gross Domestic Product (GDP)" ~ "GDP",
+    IndicatorName %in% "Household consumption expenditure (including Non-profit institutions serving households)" ~ "Household",
+    IndicatorName %in% "Gross fixed capital formation (including Acquisitions less disposals of valuables)" ~ "Gross_capital",
+    IndicatorName %in% "Imports of goods and services" ~ "Imports",
+    IndicatorName %in% "Mining, Manufacturing, Utilities (ISIC C-E)" ~ "Mining",
+    IndicatorName %in% "Manufacturing (ISIC D)" ~ "Manufacturing",
+    IndicatorName %in% "Wholesale, retail trade, restaurants and hotels (ISIC G-H)" ~ "Wholesale",
+    IndicatorName %in% "Transport, storage and communication (ISIC I)" ~ "Transport",
+    IndicatorName %in% "Other Activities (ISIC J-P)" ~ "Other",
+    IndicatorName %in% "Total Value Added" ~ "TVA",
+  )) %>% 
+    pivot_longer(
+      names_to = "Years",
+      values_to = "Monies",
+      cols = -c(CountryID, Country, IndicatorName)
+    ) %>% 
+  mutate(
+    Monies = Monies/10^9,
+    )
+
+UN_data_clean
+```
+
+
+ First we tidied the data, as it was in wide format and we needed it in a long, tidy format.
+ All figures were converted to billions (divided values by `1e9`, or $10^9$), and indicators were renamed to something shorter.
+
+```{r, echo=FALSE}
+
+tidy_GDP_data <- UN_data_clean
+
+glimpse(tidy_GDP_data)
+
+
+# Let us compare GDP components for these 3 countries
+country_list <- c("United States","India", "Germany")
+
+selected_GDP_data <- tidy_GDP_data %>% 
+  filter(Country %in% country_list)
+
+selected_GDP_data
+```
+
+Code to reproduce the plot:
+
+
+```{r gdp1, echo=FALSE, out.width="100%"}
+#knitr::include_graphics(here::here("images", "gdp1.png"), error = FALSE)
+
+yr  <- as.Date(as.character(selected_GDP_data$Years), format = "%Y")
+
+gdp_plot <- selected_GDP_data %>%
+  mutate(Years = year(yr)) %>% 
+  filter(IndicatorName %in% c("Gross_capital", "Exports", "Government", "Household", "Imports")) %>%
+  group_by(IndicatorName) %>% 
+  ggplot() +
+    geom_line(aes(Years, Monies, group = IndicatorName, color = IndicatorName)) +
+    facet_grid(~ Country) +  
+    labs(
+      color = "Components of GDP",
+      title = "GDP components over time",
+      subtitle = "In constant 2010 USD",
+      y = "Billion US$",
+      x = ""
+      ) +
+    scale_x_continuous(
+      breaks = seq(min(selected_GDP_data$Years), max(selected_GDP_data$Years), by = 10)
+    ) +
+    theme_bw() +
+    NULL
+  
+
+selected_GDP_data
+gdp_plot
+  
+```
+
+
+```{r, echo=FALSE}
+
+gdp_computation <- selected_GDP_data %>% 
+  filter(IndicatorName %in% c("Consumption", "Gross_capital", "Government", "Imports", "Exports")) %>% 
+  pivot_wider(
+    names_from = IndicatorName,
+    values_from = Monies
+    ) %>% 
+  mutate(GDP = (Consumption + Gross_capital + Government + (Exports - Imports)))
+
+gdp_computation
+
+```
+
+Below we calculate the % difference between our calculated GDP and the GDP included in the dataframe.
+
+```{r, fig.width = 10, echo=FALSE}
+library(scales)
+
+#knitr::include_graphics(here::here("images", "gdp2.png"), error = FALSE)
+
+tidy_gdp_wide <- UN_data_clean %>% 
+  filter(Country %in% country_list) %>% 
+  pivot_wider(
+    names_from = IndicatorName,
+    values_from = Monies
+    ) %>% 
+  mutate(MyGDP = (Consumption + Gross_capital + Government + (Exports - Imports))) %>%
+  mutate(
+    GDP_diff = (MyGDP - GDP)/GDP,
+    net_comp = (Exports - Imports)/GDP,
+    house_comp = Household/GDP,
+    gross_diff = Gross_capital/GDP,
+    gov_diff = Government/GDP
+    ) %>% 
+  select(c(Country, Years, net_comp, house_comp, gross_diff, gov_diff, GDP_diff))%>% 
+    pivot_longer(
+      names_to = "Compositions",
+      values_to = "Percentages",
+      cols = -c(Country, Years)
+    )
+gdp_difference <- tidy_gdp_wide %>% 
+  filter(Compositions == "GDP_diff")
+
+gdp_difference
+
+yr  <- as.Date(as.character(tidy_gdp_wide$Years), format = "%Y")
+
+gdp_diff_plot <- tidy_gdp_wide %>%
+  mutate(Years = year(yr)) %>%
+  ggplot() +
+    geom_line(aes(Years, Percentages, group = Compositions, color = Compositions)) +
+    facet_grid(~ Country) +
+    labs(
+      color = "",
+      title = "GDP and its breakdown at constant 2010 prices in US Dollars",
+      y = "proportion",
+      x = ""
+      ) +
+    scale_x_continuous(
+      breaks = seq(min(selected_GDP_data$Years), max(selected_GDP_data$Years), by = 10)
+    ) +
+    scale_y_continuous(
+      labels = scales::percent_format(accuracy = .1)
+    ) +
+    theme_bw() +
+    NULL+labs(x = NULL, colour = NULL)
+
+
+gdp_diff_plot
+```
+
+> This chart outlines the composition of the three nations GDP's and how these have changed over the past five decades.
+
+> Germany's GDP compotosition hasn't dramatically changed over the past decade, however, what we do see is how since the 2000's its Net Exports have increased in importance (thus Exports exceeded Imports).
+
+> On the other hand, the United States GDP compositions have followed clear trends. For instance, government expenditure has decreased over time, a decrease which has been made up primarly by an increase in household expenditure. The government increasing 'laiser faire' approch of might explain this decrease. Notably, net exports have decreased (thus America has been importing more than it has been exporting), thus increasing its dependancy on its trade partners.
+
+> Finally, India has seen a dramatic change in its GDP composition. Despite net exports and government expenditure remaining quasi unchanged, gross capital formation has almost doubled, with household expenditure decreasing by ~20%. This increase in Gross capital is largely attributed to India's efforts of the 21st centry to develop its national infrastructure.
+
+```{r, fig.width = 20, echo=FALSE}
+country_list_2 <- c("New Zealand","India", "United Kingdom", "Spain", "Italy", "China", "Australia")
+
+tidy_gdp_wide <- UN_data_clean %>% 
+  filter(Country %in% country_list_2) %>% 
+  pivot_wider(
+    names_from = IndicatorName,
+    values_from = Monies
+    ) %>% 
+  mutate(MyGDP = (Consumption + Gross_capital + Government + (Exports - Imports))) %>%
+  mutate(
+    GDP_diff = (MyGDP - GDP)/GDP,
+    net_comp = (Exports - Imports)/GDP,
+    house_comp = Household/GDP,
+    gross_diff = Gross_capital/GDP,
+    gov_diff = Government/GDP
+    ) %>% 
+  select(c(Country, Years, net_comp, house_comp, gross_diff, gov_diff))%>% 
+    pivot_longer(
+      names_to = "Compositions",
+      values_to = "Percentages",
+      cols = -c(Country, Years)
+    )
+
+yr  <- as.Date(as.character(tidy_gdp_wide$Years), format = "%Y")
+
+gdp_diff_plot <- tidy_gdp_wide %>%
+  mutate(Years = year(yr)) %>%
+  ggplot() +
+    geom_line(aes(Years, Percentages, group = Compositions, color = Compositions)) +
+    facet_grid(~ Country) +
+    labs(
+      color = "",
+      title = "GDP and its breakdown at constant 2010 prices in US Dollars",
+      y = "proportion",
+      x = ""
+      ) +
+    scale_x_continuous(
+      breaks = seq(min(selected_GDP_data$Years), max(selected_GDP_data$Years), by = 10)
+    ) +
+    scale_y_continuous(
+      labels = scales::percent_format(accuracy = .1)
+    ) +
+    theme_bw() +
+    NULL
+
+
+gdp_diff_plot
+
+```

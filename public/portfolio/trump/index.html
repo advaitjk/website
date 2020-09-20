@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>Trump</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="This is meta description">
+  <meta name="author" content="Alessandro Angeletti">
+  <meta name="generator" content="Hugo 0.75.1" />
+
+  <style>
+    :root{
+      --primary-color:#41228e;
+    }
+  </style>
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="/plugins/slick/slick.css ">
+  
+  <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="/css/style.min.css" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="/images/favicon.png " type="image/x-icon">
+
+  
+
+</head><body><header class="navigation fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="/">
+      
+      <h3 class="text-white font-tertiary">Alex&#39;s Site</h3>
+      
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+      aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse text-center" id="navigation">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/"> Home </a>
+        </li>
+        
+        
+        
+        
+        
+        <li class="nav-item ">
+          <a class="nav-link" href="/about">About Me</a>
+        </li>
+        
+        
+        
+        
+        
+        <li class="nav-item ">
+          <a class="nav-link" href="/portfolio">My Portfolio</a>
+        </li>
+        
+        
+        
+        
+        
+        <li class="nav-item ">
+          <a class="nav-link" href="/contact">Contact Me!</a>
+        </li>
+        
+        
+      </ul>
+    </div>
+  </nav>
+</header>
+
+
+<section class="page-title bg-primary position-relative overflow-hidden">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="text-white font-tertiary">Trump</h1>
+      </div>
+    </div>
+  </div>
+  
+  <img src="/images/illustrations/page-title.png" alt="illustrations" class="bg-shape-1 w-100">
+  <img src="/images/illustrations/leaf-pink-round.svg" alt="illustrations" class="bg-shape-2">
+  <img src="/images/illustrations/dots-cyan.svg" alt="illustrations" class="bg-shape-3">
+  <img src="/images/illustrations/leaf-orange.svg" alt="illustrations" class="bg-shape-4">
+  <img src="/images/illustrations/leaf-yellow.svg" alt="illustrations" class="bg-shape-5">
+  <img src="/images/illustrations/dots-group-cyan.svg" alt="illustrations" class="bg-shape-6">
+  <img src="/images/illustrations/leaf-cyan-lg.svg" alt="illustrations" class="bg-shape-7">
+</section>
+
+
+
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5 mb-5">
+        <img src="/images/portfolio/elections.jpg" class="img-fluid w-100" alt="Trump">
+      </div>
+      <div class="col-lg-7 mb-5 mb-lg-0 align-self-center">
+        <div class="row mx-0">
+          <div class="col-sm-6 mb-5">
+            <div class="project-meta">
+              <i class="ti-calendar"></i>
+              <div class="ml-3">
+                <h4>Date</h4>
+                <p>Sep 18, 2020</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 mb-5">
+            <div class="project-meta">
+              <i class="ti-folder"></i>
+              <div class="ml-3">
+                <h4>Categories</h4>
+                <p>Politics</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="col-lg-11">
+        <div class="content">
+
+
+<div id="trumps-approval-margins" class="section level1">
+<h1>Trump’s Approval Margins</h1>
+<p>We start by importing the data files and cleaning them up ahead of our analysis.</p>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   samplesize = col_double(),
+##   weight = col_double(),
+##   influence = col_double(),
+##   approve = col_double(),
+##   disapprove = col_double(),
+##   adjusted_approve = col_double(),
+##   adjusted_disapprove = col_double(),
+##   tracking = col_logical(),
+##   poll_id = col_double(),
+##   question_id = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## # A tibble: 14,533 x 5
+##    enddate   samplesize adjusted_approve adjusted_disapprove approval_difference
+##    &lt;chr&gt;          &lt;dbl&gt;            &lt;dbl&gt;               &lt;dbl&gt;               &lt;dbl&gt;
+##  1 1/22/2017       1500             45.8                43.6               2.18 
+##  2 1/22/2017       1992             45.3                37.8               7.44 
+##  3 1/24/2017       1632             43.2                43.9              -0.659
+##  4 1/23/2017       1500             45.8                44.6               1.18 
+##  5 1/24/2017       1500             46.8                43.6               3.18 
+##  6 1/24/2017       1500             51.6                44.4               7.15 
+##  7 1/25/2017       1651             43.4                44.5              -1.06 
+##  8 1/25/2017       1190             37.7                42.8              -5.08 
+##  9 1/25/2017       2692             41.9                36.9               4.99 
+## 10 1/26/2017       1678             43.7                45.1              -1.36 
+## # ... with 14,523 more rows</code></pre>
+<div id="create-a-plot" class="section level2">
+<h2>Create a plot</h2>
+<blockquote>
+<p>The Average net approval rating of Trump along with the 95% confidence intervals are calculated below.</p>
+</blockquote>
+<pre><code>## `summarise()` regrouping output by &#39;year&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 191 x 8
+## # Groups:   year [4]
+##     year  week Weekly_differen~ avg_difference se_Trump t_crit lower_CIs
+##    &lt;dbl&gt; &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+##  1  2017     4             64.2           1.39    0.698   2.01   -0.0102
+##  2  2017     5           -120.           -1.79    0.517   2.00   -2.82  
+##  3  2017     6           -290.           -3.82    0.612   1.99   -5.04  
+##  4  2017     7           -541.           -6.44    0.615   1.99   -7.66  
+##  5  2017     8           -528.           -6.07    0.519   1.99   -7.10  
+##  6  2017     9           -330.           -4.23    0.508   1.99   -5.24  
+##  7  2017    10           -348.           -3.91    0.575   1.99   -5.05  
+##  8  2017    11           -666.           -7.83    0.599   1.99   -9.02  
+##  9  2017    12           -636.           -7.57    0.754   1.99   -9.07  
+## 10  2017    13          -1060.          -11.6     0.726   1.99  -13.1   
+## # ... with 181 more rows, and 1 more variable: upper_CIs &lt;dbl&gt;</code></pre>
+<blockquote>
+<p>Now that we had all the data we need, lets complete our plots!</p>
+</blockquote>
+<p><img src="/portfolio/Trump_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="compare-confidence-intervals" class="section level2">
+<h2>Compare Confidence Intervals</h2>
+<blockquote>
+<p>As seen in the approval plot, mid-April shows that the confidence intervals are closer compared to larger confidence intervals in mid August. As standard error is proportional to the variance of trump’s approval ratings, national events that happened mid August, such as the BLM protests and the handling of the Covid crisis, has made the public’s view of Trump far more polarized. Because of this, the standard errors increase widening the confidence intervals.</p>
+</blockquote>
+</div>
+</div>
+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section section-on-footer" data-background="/images/backgrounds/bg-dots.png">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="section-title">Contact Info</h2>
+      </div>
+      <div class="col-lg-8 mx-auto">
+        <div class="bg-white rounded text-center p-5 shadow-down">
+          <h4 class="mb-80">Contact Form</h4>
+          <form action="https://formspree.io/xdopooda" method="POST" class="row">
+            <div class="col-md-6">
+              <input type="text" id="name" name="name" placeholder="Full Name" class="form-control px-0 mb-4">
+            </div>
+            <div class="col-md-6">
+              <input type="email" id="email" name="email" placeholder="Email Address" class="form-control px-0 mb-4">
+            </div>
+            <div class="col-12">
+              <textarea name="message" id="message" class="form-control px-0 mb-4"
+                placeholder="Type Message Here"></textarea>
+            </div>
+            <div class="col-lg-6 col-10 mx-auto">
+              <button class="btn btn-primary w-100">send</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<footer class="bg-dark footer-section">
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5 class="text-light">Email</h5>
+          <p class="text-white paragraph-lg font-secondary">alessandroangeletti27@gmail.com</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-light">Phone</h5>
+          <p class="text-white paragraph-lg font-secondary">&#43;44 (0) 7853 665093</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-light">Address</h5>
+          <p class="text-white paragraph-lg font-secondary">N/A</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="border-top text-center border-dark py-5">
+    <p class="mb-0 text-light">Copyright © 2020 a theme by <a href="https://gethugothemes.com">gethugothemes</a></p>
+  </div>
+</footer>
+
+
+<!-- Google Map API -->
+
+
+<!-- JS Plugins -->
+
+<script src="/plugins/jQuery/jquery.min.js"></script>
+
+<script src="/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="/plugins/slick/slick.min.js"></script>
+
+<script src="/plugins/shuffle/shuffle.min.js"></script>
+
+<script src="/plugins/google-map/map.js"></script>
+
+
+<!-- Main Script -->
+
+<script src="/js/script.min.js"></script></body>
+
+</html>

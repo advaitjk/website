@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>UN GDP Data Analysis</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="This is meta description">
+  <meta name="author" content="Alessandro Angeletti">
+  <meta name="generator" content="Hugo 0.75.1" />
+
+  <style>
+    :root{
+      --primary-color:#41228e;
+    }
+  </style>
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="/plugins/slick/slick.css ">
+  
+  <link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="/css/style.min.css" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="/images/favicon.png " type="image/x-icon">
+
+  
+
+</head><body><header class="navigation fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="/">
+      
+      <h3 class="text-white font-tertiary">Alex&#39;s Site</h3>
+      
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+      aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse text-center" id="navigation">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/"> Home </a>
+        </li>
+        
+        
+        
+        
+        
+        <li class="nav-item ">
+          <a class="nav-link" href="/about">About Me</a>
+        </li>
+        
+        
+        
+        
+        
+        <li class="nav-item ">
+          <a class="nav-link" href="/portfolio">My Portfolio</a>
+        </li>
+        
+        
+        
+        
+        
+        <li class="nav-item ">
+          <a class="nav-link" href="/contact">Contact Me!</a>
+        </li>
+        
+        
+      </ul>
+    </div>
+  </nav>
+</header>
+
+
+<section class="page-title bg-primary position-relative overflow-hidden">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="text-white font-tertiary">UN GDP Data Analysis</h1>
+      </div>
+    </div>
+  </div>
+  
+  <img src="/images/illustrations/page-title.png" alt="illustrations" class="bg-shape-1 w-100">
+  <img src="/images/illustrations/leaf-pink-round.svg" alt="illustrations" class="bg-shape-2">
+  <img src="/images/illustrations/dots-cyan.svg" alt="illustrations" class="bg-shape-3">
+  <img src="/images/illustrations/leaf-orange.svg" alt="illustrations" class="bg-shape-4">
+  <img src="/images/illustrations/leaf-yellow.svg" alt="illustrations" class="bg-shape-5">
+  <img src="/images/illustrations/dots-group-cyan.svg" alt="illustrations" class="bg-shape-6">
+  <img src="/images/illustrations/leaf-cyan-lg.svg" alt="illustrations" class="bg-shape-7">
+</section>
+
+
+
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5 mb-5">
+        <img src="/images/portfolio/GDP.jpg" class="img-fluid w-100" alt="UN GDP Data Analysis">
+      </div>
+      <div class="col-lg-7 mb-5 mb-lg-0 align-self-center">
+        <div class="row mx-0">
+          <div class="col-sm-6 mb-5">
+            <div class="project-meta">
+              <i class="ti-calendar"></i>
+              <div class="ml-3">
+                <h4>Date</h4>
+                <p>Sep 18, 2020</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 mb-5">
+            <div class="project-meta">
+              <i class="ti-folder"></i>
+              <div class="ml-3">
+                <h4>Categories</h4>
+                <p>Economic analytics</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="col-lg-11">
+        <div class="content">
+
+
+<pre><code>## -- Attaching packages ---------------------------------------------------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.3     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: ggformula</code></pre>
+<pre><code>## Loading required package: ggstance</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ggstance&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     geom_errorbarh, GeomErrorbarh</code></pre>
+<pre><code>## 
+## New to ggformula?  Try the tutorials: 
+##  learnr::run_tutorial(&quot;introduction&quot;, package = &quot;ggformula&quot;)
+##  learnr::run_tutorial(&quot;refining&quot;, package = &quot;ggformula&quot;)</code></pre>
+<pre><code>## Loading required package: mosaicData</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
+## 
+##     expand, pack, unpack</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;mosaic&#39;:
+##   method                           from   
+##   fortify.SpatialPolygonsDataFrame ggplot2</code></pre>
+<pre><code>## 
+## The &#39;mosaic&#39; package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.
+## 
+## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.
+## 
+## Have you tried the ggformula package for your plots?</code></pre>
+<pre><code>## 
+## Attaching package: &#39;mosaic&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:Matrix&#39;:
+## 
+##     mean</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     count, do, tally</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     cross</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     stat</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,
+##     quantile, sd, t.test, var</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     max, mean, min, prod, range, sample, sum</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ggthemes&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     theme_map</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
+##   method from   
+##   +.gg   ggplot2</code></pre>
+<pre><code>## here() starts at C:/Users/Alessandro Angeletti/Documents/myrepo/AlexWebsite</code></pre>
+<pre><code>## 
+## Attaching package: &#39;skimr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     n_missing</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<pre><code>## Loading required package: lubridate</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     date, intersect, setdiff, union</code></pre>
+<pre><code>## Loading required package: PerformanceAnalytics</code></pre>
+<pre><code>## Loading required package: xts</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre><code>## 
+## Attaching package: &#39;xts&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     first, last</code></pre>
+<pre><code>## 
+## Attaching package: &#39;PerformanceAnalytics&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     legend</code></pre>
+<pre><code>## Loading required package: quantmod</code></pre>
+<pre><code>## Loading required package: TTR</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
+##   method            from
+##   as.zoo.data.frame zoo</code></pre>
+<pre><code>## Version 0.4-0 included new data defaults. See ?getSymbols.</code></pre>
+<pre><code>## == Need to Learn tidyquant? =================================================================================================================
+## Business Science offers a 1-hour course - Learning Lab #9: Performance Analysis &amp; Portfolio Optimization with tidyquant!
+## &lt;/&gt; Learn more at: https://university.business-science.io/p/learning-labs-pro &lt;/&gt;</code></pre>
+<pre><code>## 
+## Attaching package: &#39;infer&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:mosaic&#39;:
+## 
+##     prop_test, t_test</code></pre>
+<pre><code>## Loading required package: airports</code></pre>
+<pre><code>## Loading required package: cherryblossom</code></pre>
+<pre><code>## Loading required package: usdata</code></pre>
+<pre><code>## 
+## Attaching package: &#39;openintro&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     dotPlot</code></pre>
+<pre><code>## The following objects are masked from &#39;package:lattice&#39;:
+## 
+##     ethanol, lsegments</code></pre>
+<pre><code>## 
+## Attaching package: &#39;reshape2&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:openintro&#39;:
+## 
+##     tips</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     smiths</code></pre>
+<pre><code>## # A tibble: 176,880 x 5
+##    CountryID Country     IndicatorName Years Monies
+##        &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;  &lt;dbl&gt;
+##  1         4 Afghanistan Consumption   1970    5.56
+##  2         4 Afghanistan Consumption   1971    5.33
+##  3         4 Afghanistan Consumption   1972    5.20
+##  4         4 Afghanistan Consumption   1973    5.75
+##  5         4 Afghanistan Consumption   1974    6.15
+##  6         4 Afghanistan Consumption   1975    6.32
+##  7         4 Afghanistan Consumption   1976    6.37
+##  8         4 Afghanistan Consumption   1977    6.90
+##  9         4 Afghanistan Consumption   1978    7.09
+## 10         4 Afghanistan Consumption   1979    6.92
+## # ... with 176,870 more rows</code></pre>
+<p>First we tidied the data, as it was in wide format and we needed it in a long, tidy format.
+All figures were converted to billions (divided values by <code>1e9</code>, or <span class="math inline">\(10^9\)</span>), and indicators were renamed to something shorter.</p>
+<pre><code>## Rows: 176,880
+## Columns: 5
+## $ CountryID     &lt;dbl&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,...
+## $ Country       &lt;chr&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghani...
+## $ IndicatorName &lt;chr&gt; &quot;Consumption&quot;, &quot;Consumption&quot;, &quot;Consumption&quot;, &quot;Consump...
+## $ Years         &lt;chr&gt; &quot;1970&quot;, &quot;1971&quot;, &quot;1972&quot;, &quot;1973&quot;, &quot;1974&quot;, &quot;1975&quot;, &quot;1976...
+## $ Monies        &lt;dbl&gt; 5.559069, 5.332823, 5.197066, 5.746510, 6.147288, 6.3...</code></pre>
+<pre><code>## # A tibble: 2,448 x 5
+##    CountryID Country IndicatorName Years Monies
+##        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;  &lt;dbl&gt;
+##  1       276 Germany Consumption   1970   1152.
+##  2       276 Germany Consumption   1971   1218.
+##  3       276 Germany Consumption   1972   1282.
+##  4       276 Germany Consumption   1973   1329.
+##  5       276 Germany Consumption   1974   1345.
+##  6       276 Germany Consumption   1975   1398.
+##  7       276 Germany Consumption   1976   1450.
+##  8       276 Germany Consumption   1977   1504.
+##  9       276 Germany Consumption   1978   1560.
+## 10       276 Germany Consumption   1979   1614.
+## # ... with 2,438 more rows</code></pre>
+<p>Code to reproduce the plot:</p>
+<pre><code>## # A tibble: 2,448 x 5
+##    CountryID Country IndicatorName Years Monies
+##        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;  &lt;dbl&gt;
+##  1       276 Germany Consumption   1970   1152.
+##  2       276 Germany Consumption   1971   1218.
+##  3       276 Germany Consumption   1972   1282.
+##  4       276 Germany Consumption   1973   1329.
+##  5       276 Germany Consumption   1974   1345.
+##  6       276 Germany Consumption   1975   1398.
+##  7       276 Germany Consumption   1976   1450.
+##  8       276 Germany Consumption   1977   1504.
+##  9       276 Germany Consumption   1978   1560.
+## 10       276 Germany Consumption   1979   1614.
+## # ... with 2,438 more rows</code></pre>
+<p><img src="/portfolio/GDP_files/figure-html/gdp1-1.png" width="100%" /></p>
+<pre><code>## # A tibble: 144 x 9
+##    CountryID Country Years Consumption Government Gross_capital Exports Imports
+##        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1       276 Germany 1970        1152.       280.          393.    174.    188.
+##  2       276 Germany 1971        1218.       298.          416.    178.    202.
+##  3       276 Germany 1972        1282.       313.          427.    189.    215.
+##  4       276 Germany 1973        1329.       332.          430.    210.    222.
+##  5       276 Germany 1974        1345.       351.          393.    234.    223.
+##  6       276 Germany 1975        1398.       366.          375.    220.    230.
+##  7       276 Germany 1976        1450.       374.          388.    243.    255.
+##  8       276 Germany 1977        1504.       382.          405.    252.    264.
+##  9       276 Germany 1978        1560.       398.          425.    259.    279.
+## 10       276 Germany 1979        1614.       414.          451.    272.    306.
+## # ... with 134 more rows, and 1 more variable: GDP &lt;dbl&gt;</code></pre>
+<p>Below we calculate the % difference between our calculated GDP and the GDP included in the dataframe.</p>
+<pre><code>## 
+## Attaching package: &#39;scales&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:mosaic&#39;:
+## 
+##     rescale</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     discard</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     col_factor</code></pre>
+<pre><code>## # A tibble: 144 x 4
+##    Country Years Compositions Percentages
+##    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;
+##  1 Germany 1970  GDP_diff           0.181
+##  2 Germany 1971  GDP_diff           0.206
+##  3 Germany 1972  GDP_diff           0.210
+##  4 Germany 1973  GDP_diff           0.202
+##  5 Germany 1974  GDP_diff           0.204
+##  6 Germany 1975  GDP_diff           0.231
+##  7 Germany 1976  GDP_diff           0.212
+##  8 Germany 1977  GDP_diff           0.215
+##  9 Germany 1978  GDP_diff           0.223
+## 10 Germany 1979  GDP_diff           0.215
+## # ... with 134 more rows</code></pre>
+<p><img src="/portfolio/GDP_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<blockquote>
+<p>This chart outlines the composition of the three nations GDP’s and how these have changed over the past five decades.</p>
+</blockquote>
+<blockquote>
+<p>Germany’s GDP compotosition hasn’t dramatically changed over the past decade, however, what we do see is how since the 2000’s its Net Exports have increased in importance (thus Exports exceeded Imports).</p>
+</blockquote>
+<blockquote>
+<p>On the other hand, the United States GDP compositions have followed clear trends. For instance, government expenditure has decreased over time, a decrease which has been made up primarly by an increase in household expenditure. The government increasing ‘laiser faire’ approch of might explain this decrease. Notably, net exports have decreased (thus America has been importing more than it has been exporting), thus increasing its dependancy on its trade partners.</p>
+</blockquote>
+<blockquote>
+<p>Finally, India has seen a dramatic change in its GDP composition. Despite net exports and government expenditure remaining quasi unchanged, gross capital formation has almost doubled, with household expenditure decreasing by ~20%. This increase in Gross capital is largely attributed to India’s efforts of the 21st centry to develop its national infrastructure.</p>
+</blockquote>
+<p><img src="/portfolio/GDP_files/figure-html/unnamed-chunk-4-1.png" width="1920" /></p>
+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section section-on-footer" data-background="/images/backgrounds/bg-dots.png">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="section-title">Contact Info</h2>
+      </div>
+      <div class="col-lg-8 mx-auto">
+        <div class="bg-white rounded text-center p-5 shadow-down">
+          <h4 class="mb-80">Contact Form</h4>
+          <form action="#" method="POST" class="row">
+            <div class="col-md-6">
+              <input type="text" id="name" name="name" placeholder="Full Name" class="form-control px-0 mb-4">
+            </div>
+            <div class="col-md-6">
+              <input type="email" id="email" name="email" placeholder="Email Address" class="form-control px-0 mb-4">
+            </div>
+            <div class="col-12">
+              <textarea name="message" id="message" class="form-control px-0 mb-4"
+                placeholder="Type Message Here"></textarea>
+            </div>
+            <div class="col-lg-6 col-10 mx-auto">
+              <button class="btn btn-primary w-100">send</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<footer class="bg-dark footer-section">
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5 class="text-light">Email</h5>
+          <p class="text-white paragraph-lg font-secondary">alessandroangeletti27@gmail.com</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-light">Phone</h5>
+          <p class="text-white paragraph-lg font-secondary">&#43;44 (0) 7853 665093</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-light">Address</h5>
+          <p class="text-white paragraph-lg font-secondary">N/A</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="border-top text-center border-dark py-5">
+    <p class="mb-0 text-light">Copyright © 2020 a theme by <a href="https://gethugothemes.com">gethugothemes</a></p>
+  </div>
+</footer>
+
+
+<!-- Google Map API -->
+
+
+<!-- JS Plugins -->
+
+<script src="/plugins/jQuery/jquery.min.js"></script>
+
+<script src="/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="/plugins/slick/slick.min.js"></script>
+
+<script src="/plugins/shuffle/shuffle.min.js"></script>
+
+<script src="/plugins/google-map/map.js"></script>
+
+
+<!-- Main Script -->
+
+<script src="/js/script.min.js"></script></body>
+
+</html>
