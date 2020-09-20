@@ -1,4 +1,4 @@
 [submodule "themes/kross-hugo"]
-	path = themes/kross-hugo
-	url = https://github.com/forestryio/kross-hugo-starter.git
+	path = website
+	url = https://github.com/advaitjk/website
 	
